@@ -1,0 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 0;
+}
+
+h1 {
+  text-align: center;
+}
+.header {
+  background-color: yellow;
+}
+
+/* .container {
+  width: 80%;
+  border: thin solid black;
+  margin: auto;
+} */
+
+/* button {
+  padding: 10px 20px;
+  background-color: blue;
+  border-radius: 12px;
+  color: white;
+} */
+
+li {
+  display: inline-block;
+  list-style-type: none;
+  margin-left: 20px;
+}

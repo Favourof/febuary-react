@@ -1,0 +1,13 @@
+.but {
+  padding: 20px 40px;
+  border: none;
+  border-radius: 12px;
+  color: yellow;
+  background-color: green;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.507);
+}
+
+.container {
+  border: thick solid black;
+  margin: 5px;
+}
