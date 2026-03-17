@@ -13,7 +13,7 @@ export const Login = () => {
 
     const productSchema = z.object({
         email: z.email().nonempty(),
-        password: z.string().nonempty().min(6, "password must be atleast 6 character long")
+        password: z.string().nonempty().min(6, "password must be atleast 6 characters long")
     })
 
 
