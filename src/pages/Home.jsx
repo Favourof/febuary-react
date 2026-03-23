@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { userContext } from '../context/userContext';
 
 export const Home = () => {
     // intail rendering
     const [count, setCount] = useState(1);
+    const { name } = useContext(userContext)
     useEffect(() => {
         console.log('Home render');
 
@@ -47,6 +49,7 @@ export const Home = () => {
 
     return (
         <div>Home
+            {name && `Hello  ${name}`}
             <h1>This is our home page</h1>
             <p>Count {count}</p>
             <button onClick={() => setCount(count + 1)}>increase</button>

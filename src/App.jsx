@@ -15,12 +15,14 @@ import { NotFound } from "./components/NotFound";
 import { Profile } from "./pages/Profile";
 import { Login } from "./pages/Login";
 import { ProductDetails } from "./pages/ProductDetails";
+import { Register } from "./pages/register";
 
 
 function App() {
 
   return (
     <>
+
       <Navber />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -30,6 +32,7 @@ function App() {
         <Route path="profile/:user" element={<Profile />} />
         <Route path="productDetail/:id" element={<ProductDetails />} />
         <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       {/* <Footer /> */}

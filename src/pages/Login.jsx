@@ -1,14 +1,18 @@
+/* eslint-disable no-unused-vars */
 import { zodResolver } from '@hookform/resolvers/zod';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import z from 'zod';
 import { publicIntance } from '../api/api';
+import { userContext } from '../context/userContext';
 
 export const Login = () => {
     const [loading, setLoading] = useState(false);
     const [disabled, setDisabled] = useState(false);
     const navigate = useNavigate()
+    const [errorMessage, seterrorMessage] = useState("");
+    const { logIn } = useContext(userContext)
 
 
     const productSchema = z.object({
@@ -33,14 +37,22 @@ export const Login = () => {
             const response = await publicIntance.post("/auth/login", data)
             console.log(response.data);
 
-            if (response) {
-                localStorage.setItem('token', response.data.token)
+            const user = response.data.users
+            const token = response.data.token
+            console.log(user, token);
+
+
+            if (response || response?.data) {
+                logIn({ user, token })
+
+                // localStorage.setItem('token', response.data.token)
                 navigate("/product")
             }
 
 
         } catch (error) {
-            console.log(error);
+            console.log(error.response.data.message);
+            seterrorMessage(error.response.data.message)
 
         }
 
@@ -117,7 +129,9 @@ export const Login = () => {
                 <button disabled={disabled} type="submit" style={buttonStyle}>
                     {loading ? "loading" : "submit"}
                 </button>
+                <p>{errorMessage}</p>
             </form>
+
 
 
             {/* {

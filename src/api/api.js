@@ -1,5 +1,4 @@
 import axios from "axios";
-import { promise } from "zod";
 
 const baseURL = "http://localhost:4001";
 export const publicIntance = axios.create({ baseURL });
@@ -14,5 +13,5 @@ privateInstance.interceptors.request.use(
     }
     return config;
   },
-  (error) => promise.reject(error),
+  (error) => Promise.reject(error),
 );
