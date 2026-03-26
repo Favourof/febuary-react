@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 export const ReacHookForm = () => {
     const [loading, setLoading] = useState(false);
     const [disabled, setDisabled] = useState(false);
+    const [preview, setPreview] = useState(null);
     const navigate = useNavigate()
 
 
@@ -18,7 +19,17 @@ export const ReacHookForm = () => {
         price: z.preprocess(
             (value) => (typeof value === "string" ? Number(value) : value), z.number().min(100, "Price must be greater than 99.9")),
         description: z.string().nonempty().min(10, "Description must be 10 character long"),
-        image: z.url().nonempty()
+        image: z
+            .any()
+            .refine((files) => files?.length === 1, "Image is required")
+            .refine(
+                (files) => files?.[0]?.type.startsWith("image/"),
+                "File must be an image"
+            )
+            .refine(
+                (files) => files?.[0]?.size <= 5 * 1024 * 1024,
+                "Image must be less than 2MB"
+            ),
     })
 
 
@@ -29,11 +40,31 @@ export const ReacHookForm = () => {
     )
     // console.log(errors);
 
+    const handleImageChange = (e) => {
+        const file = e.target.files?.[0]
+        if (file) {
+            setPreview(URL.createObjectURL(file))
+        }
+        console.log(file);
+
+    }
+
 
     const onSubmit = async (data) => {
+        console.log(data.image?.[0]);
+        const formdata = new FormData()
+
+        formdata.append('title', data.title)
+        formdata.append("description", data.description)
+        formdata.append("price", data.price)
+        formdata.append('image', data.image?.[0])
+
+        // console.log(formdata);
+
+
 
         try {
-            const response = await privateInstance.post("/product", data)
+            const response = await privateInstance.post("/product", formdata)
             console.log(response.data.message, 'response');
 
             if (response) {
@@ -41,7 +72,7 @@ export const ReacHookForm = () => {
             }
 
         } catch (error) {
-            console.log(error);
+            console.log(error.response.data.message);
 
         }
 
@@ -132,14 +163,16 @@ export const ReacHookForm = () => {
                 <div>
                     <label htmlFor="image">Image URL:</label>
                     <input
-                        type="url" // Use type="url" for URL validation
+                        type="file" // Use type="url" for URL validation
                         id="image"
                         name="image"
                         style={inputStyle}
                         {...register("image")}
                         placeholder="e.g., https://example.com/image.jpg"
+                        onChange={handleImageChange}
                         required
                     />
+                    {preview && <img src={preview} width={"100%"} height={150} />}
                     {errors.image && <p style={{ color: "red", fontSize: "10px" }}>{errors.image.message}</p>}
                 </div>
 

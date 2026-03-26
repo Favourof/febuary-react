@@ -59,6 +59,7 @@ export const Product = () => {
                     <ul style={{ border: "thin solid black", margin: "20px", padding: "20px" }} key={i}>
                         <li>{item.title}</li>
                         <li>{item.description.slice(0, 110)}</li>
+                        <li><img src={item.image} alt="" width={200} height={200} /></li>
                         <button onClick={() => navigate(`/productDetail/${item._id}`)} style={{ marginLeft: "20px", padding: "20px" }}>more details</button>
                     </ul>
 
