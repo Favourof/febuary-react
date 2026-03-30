@@ -14,7 +14,7 @@ import { NotFound } from "./components/NotFound";
 import { Profile } from "./pages/Profile";
 import { Login } from "./pages/Login";
 import { ProductDetails } from "./pages/ProductDetails";
-import { Register } from "./pages/register";
+import { Register } from "./pages/Register";
 
 
 function App() {
